@@ -18,6 +18,8 @@
         type: spot_controllers/SpotJointController
       spot_pose_broadcaster:
         type: spot_controllers/SpotPoseBroadcaster
+      arm_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
       hardware_components_initial_state:
         unconfigured:
         - SpotSystem
@@ -43,8 +45,21 @@
         - arm_wr0
         - arm_wr1
         - arm_f1x
-      interface_names:
+
+  arm_controller:
+    ros__parameters:
+      joints:
+        - arm_sh0
+        - arm_sh1
+        - arm_el0
+        - arm_el1
+        - arm_wr0
+        - arm_wr1
+      command_interfaces:
         - position
+      state_interfaces:
+        - position
+      state_publish_rate: 50.0
   forward_state_controller:
     ros__parameters:
       joints:

@@ -129,8 +129,6 @@ def launch_setup(context: LaunchContext, ld: LaunchDescription) -> None:
             output="both",
             parameters=[robot_description, controllers_config],
             namespace=spot_name,
-            # Remap joint states so it doesn't collide with high level joint states.
-            remappings=[(f"/{tf_prefix}joint_states", f"/{tf_prefix}low_level/joint_states")],
         )
     )
     # Publish frequency of the robot state publisher defaults to 20 Hz, resulting in slow TF lookups.
@@ -142,7 +140,6 @@ def launch_setup(context: LaunchContext, ld: LaunchDescription) -> None:
             output="both",
             parameters=[robot_description, {"ignore_timestamp": True}],
             namespace=spot_name,
-            remappings=[(f"/{tf_prefix}joint_states", f"/{tf_prefix}low_level/joint_states")],
             condition=UnlessCondition(LaunchConfiguration("control_only")),
         )
     )
